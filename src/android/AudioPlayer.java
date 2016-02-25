@@ -141,8 +141,25 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
         case NONE:
             this.audioFile = file;
             this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            this.recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT); // THREE_GPP);
-            this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT); //AMR_NB);
+
+                            // only for gingerbread 2.3.3 and newer versions
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+
+                                // support to record AAC with 44100 audio sampling
+                               this.recorder.setAudioSamplingRate(44100);
+                               this.recorder.setAudioEncodingBitRate(96000);
+                               this.recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                               this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+
+                           }
+                           else{
+
+                                this.recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);// THREE_GPP);
+                               this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);// //AMR_NB);
+
+                            }
+
+
             this.recorder.setOutputFile(this.tempFile);
             try {
                 this.recorder.prepare();

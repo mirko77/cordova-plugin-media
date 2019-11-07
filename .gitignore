@@ -12,12 +12,15 @@ Thumbs.db
 *.swp
 *.user
 
+node_modules
+
+#eclipse
+bin
+.project
+.classpath
+.idea
 
 
 
 
 
-
-
-
- 
